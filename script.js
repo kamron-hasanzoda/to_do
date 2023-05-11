@@ -2,7 +2,7 @@ let cont = document.querySelector('.container')
 let form = document.forms.sub;
 let todos = [];
 
-function create(place, id, arr) {
+function create(arr, place) {
   place.innerHTML = ''
   for (let itemm of arr) {
     let item = document.createElement("div");
@@ -10,47 +10,38 @@ function create(place, id, arr) {
     let h1 = document.createElement("h1");
     let img = document.createElement("img");
     let p = document.createElement("p");
-    let item_id = 0
 
     item.classList.add("item");
     two.classList.add("two");
 
+    item.style.scale = '0.5'
+    setTimeout(() => {
+      item.style.transition = '1s ease'
+      item.style.scale = '1'
+    }, 100);
+
     img.src = "./img/close.svg";
     h1.innerHTML = itemm.task;
     p.innerHTML = itemm.time;
-    item_id = id
-    console.log(todos);
 
-    img.onclick = () => {
-      item.style.scale = '0.5'
-      item.style.transition = '1s ease'
-      if (item_id != arr.forEach(i => i.id)) {
-        item.remove()
-        todos = todos.filter(el => el.id != item_id)
-      } else {
-        alert('err')
-      }
-    }
-
-    let truee = false
-
-    if (truee = false) {
-      h1.classList.remove('active')
-    } else {
+    if (itemm.isDone === true) {
       h1.classList.add('active')
     }
 
     h1.onclick = () => {
-      truee = true
-      h1.onclick = () => {
-        truee = false
-      }
+      itemm.isDone = !itemm.isDone
+      create(todos, cont  )
     }
 
-    if (truee == true) {
-      h1.classList.add('active')
-    } else {
-      h1.classList.remove('active')
+    img.onclick = () => {
+      item.style.scale = '0.5'
+      item.style.transition = '1s ease'
+      if (itemm.id != arr.forEach(i => i.id)) {
+        todos = todos.filter(el => el.id != itemm.id)
+        setTimeout(() => {
+          item.remove()
+        }, 400);
+      }
     }
 
     item.append(two, p);
@@ -75,5 +66,5 @@ form.onsubmit = (event) => {
   });
 
   todos.push(task);
-  create(cont, task.id, todos);
+  create(todos, cont);
 };
